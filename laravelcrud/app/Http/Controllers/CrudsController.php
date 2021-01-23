@@ -74,6 +74,8 @@ class CrudsController extends Controller
     public function edit($id)
     {
         //
+		$crud= Crud::find($id);  
+		return view('users/edit', compact('crud'));
     }
 
     /**
@@ -86,6 +88,21 @@ class CrudsController extends Controller
     public function update(Request $request, $id)
     {
         //
+		
+		$request->validate([  
+            'first_name'=>'required',  
+            'last_name'=>'required',  
+            'gender'=>'required',  
+            'qualifications'=>'required'  
+        ]);  
+  
+        $crud = Crud::find($id);  
+        $crud->first_name =  $request->get('first_name');  
+        $crud->last_name = $request->get('last_name');  
+        $crud->qualifications = $request->get('qualifications');  
+        $crud->gender = $request->get('gender');  
+        
+        $crud->save();  
     }
 
     /**
